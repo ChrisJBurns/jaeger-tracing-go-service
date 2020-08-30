@@ -38,7 +38,7 @@ func CreateEmployee(c *gin.Context) {
 	_, span := tracer.Start(ctx, "mongodb-query")
 	_, err := collection.InsertOne(context.TODO(), newEmployee)
 	if err != nil {
-		log.Printf("Error while inserting new employee into db, Reason: %v\n", err)
+		log.Fatalf("Error while inserting new employee into db, Reason: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status":  http.StatusInternalServerError,
 			"message": "Something went wrong",

@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+	"os"
 	"time"
 	"log"
 	"jaeger-tracing-go-service/controllers"
@@ -12,7 +13,7 @@ import (
 
 func Connect() {
 	// Database Config
-	clientOptions := options.Client().ApplyURI("mongodb://admin:admin@localhost:27017/admin")
+	clientOptions := options.Client().ApplyURI(os.Getenv("MONGODB_URI"))
 	client, err := mongo.NewClient(clientOptions)
 
 	//Set up a context required by mongo.Connect
@@ -28,7 +29,7 @@ func Connect() {
 	} else {
 		log.Println("Connected!")
 	}
-	db := client.Database("employees")
+	db := client.Database(os.Getenv("DATABASE_NAME"))
 	controllers.EmployeesCollection(db)
 	return
 }

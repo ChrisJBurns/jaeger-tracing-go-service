@@ -7,6 +7,8 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.4.0
-	golang.org/x/crypto v0.0.0-20200117160349-530e935923ad // indirect
-	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
+	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin v0.11.0
+	go.opentelemetry.io/otel v0.11.0
+	go.opentelemetry.io/otel/exporters/trace/jaeger v0.11.0
+	go.opentelemetry.io/otel/sdk v0.11.0
 )

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"context"
 	"log"
 	"time"
 	"net/http"
@@ -30,13 +29,11 @@ type Employee struct {
 
 // creates employee from the data passed into the request
 func CreateEmployee(c *gin.Context) {
-	tracer := getTracer(c)
 	ctx := c.Request.Context()
 	
 	newEmployee := getEmployeeDetailsFromRequest(c)
 	
-	_, span := tracer.Start(ctx, "mongodb-query")
-	_, err := collection.InsertOne(context.TODO(), newEmployee)
+	_, err := collection.InsertOne(ctx, newEmployee)
 	if err != nil {
 		log.Fatalf("Error while inserting new employee into db, Reason: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -45,7 +42,6 @@ func CreateEmployee(c *gin.Context) {
 		})
 		return
 	}
-	span.End()
 
 	c.JSON(http.StatusCreated, newEmployee)
 	return
@@ -53,23 +49,19 @@ func CreateEmployee(c *gin.Context) {
 
 // gets employee based on the employeeId
 func GetEmployee(c *gin.Context) {
-	tracer := getTracer(c)
 	ctx := c.Request.Context()
 
 	id := c.Param("id")
 
 	employee := Employee{}
-	_, span := tracer.Start(ctx, "mongodb-query")
-	err := collection.FindOne(context.TODO(), bson.M{"id": id}).Decode(&employee)
+	err := collection.FindOne(ctx, bson.M{"id": id}).Decode(&employee)
 	if err != nil {
-		log.Printf("Error while getting a single todo, Reason: %v\n", err)
 		c.JSON(http.StatusNotFound, gin.H{
 			"status":  http.StatusNotFound,
 			"message": "Employee not found",
 		})
 		return
 	}
-	span.End()
 
 	c.JSON(http.StatusOK, employee)
 	return

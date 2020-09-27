@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"jaeger-tracing-go-service/controllers"
+	mongotrace "go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver"
 )
 
 // func Connect(tracer trace.Tracer) {
@@ -16,6 +17,7 @@ func Connect() {
 	// Database Config
 	// clientOptions := options.Client().ApplyURI("mongodb://admin:admin@localhost:27017/admin?connect=direct")
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGODB_URI"))
+	clientOptions.Monitor = mongotrace.NewMonitor("jaeger-tracing-go-service")
 	client, err := mongo.NewClient(clientOptions)
 
 	//Set up a context required by mongo.Connect

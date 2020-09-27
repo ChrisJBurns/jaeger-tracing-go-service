@@ -23,6 +23,7 @@ type Employee struct {
     LastName  string	`json:"lastName"`
 	Occupation string	`json:"occupation"`
 	SalaryGrade string	`json:"salaryGrade"`
+	SalaryAmount string `json:"salaryAmount"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -74,6 +75,7 @@ func getEmployeeDetailsFromRequest(c *gin.Context) Employee {
 	lastName := employee.LastName
 	occupation := employee.Occupation
 	salaryGrade := employee.SalaryGrade
+	salaryAmount := employee.SalaryAmount
 	id := guuid.New().String()
 
 	newEmployee := Employee {
@@ -82,6 +84,7 @@ func getEmployeeDetailsFromRequest(c *gin.Context) Employee {
 		LastName:		lastName,
 		Occupation:		occupation,
 		SalaryGrade: 	salaryGrade,
+		SalaryAmount: 	salaryAmount,
 		CreatedAt: 		time.Now(),
 		UpdatedAt: 		time.Now(),
 	}

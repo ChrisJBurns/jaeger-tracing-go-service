@@ -91,12 +91,3 @@ func getEmployeeDetailsFromRequest(c *gin.Context) Employee {
 
 	return newEmployee
 }
-
-func getTracer(c *gin.Context) oteltrace.Tracer{
-	var tracer oteltrace.Tracer
-	tracerInterface, ok := c.Get("otel-go-contrib-tracer")
-	if ok {
-		tracer, ok = tracerInterface.(oteltrace.Tracer)
-	}
-	return tracer
-}

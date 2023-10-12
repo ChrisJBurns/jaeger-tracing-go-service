@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"log"
-	"time"
-	"net/http"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/bson"
 	guuid "github.com/google/uuid"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"log"
+	"net/http"
+	"time"
 )
 
 var collection *mongo.Collection
@@ -17,22 +17,22 @@ func EmployeesCollection(c *mongo.Database) {
 }
 
 type Employee struct {
-	ID string			`json:"id"`
-    FirstName string	`json:"firstName"`
-    LastName  string	`json:"lastName"`
-	Occupation string	`json:"occupation"`
-	SalaryGrade string	`json:"salaryGrade"`
-	SalaryAmount string `json:"salaryAmount"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID           string    `json:"id"`
+	FirstName    string    `json:"firstName"`
+	LastName     string    `json:"lastName"`
+	Occupation   string    `json:"occupation"`
+	SalaryGrade  string    `json:"salaryGrade"`
+	SalaryAmount string    `json:"salaryAmount"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }
 
 // creates employee from the data passed into the request
 func CreateEmployee(c *gin.Context) {
 	ctx := c.Request.Context()
-	
+
 	newEmployee := getEmployeeDetailsFromRequest(c)
-	
+
 	_, err := collection.InsertOne(ctx, newEmployee)
 	if err != nil {
 		log.Fatalf("Error while inserting new employee into db, Reason: %v\n", err)
@@ -77,15 +77,15 @@ func getEmployeeDetailsFromRequest(c *gin.Context) Employee {
 	salaryAmount := employee.SalaryAmount
 	id := guuid.New().String()
 
-	newEmployee := Employee {
-		ID: id,
-		FirstName:		firstName,
-		LastName:		lastName,
-		Occupation:		occupation,
-		SalaryGrade: 	salaryGrade,
-		SalaryAmount: 	salaryAmount,
-		CreatedAt: 		time.Now(),
-		UpdatedAt: 		time.Now(),
+	newEmployee := Employee{
+		ID:           id,
+		FirstName:    firstName,
+		LastName:     lastName,
+		Occupation:   occupation,
+		SalaryGrade:  salaryGrade,
+		SalaryAmount: salaryAmount,
+		CreatedAt:    time.Now(),
+		UpdatedAt:    time.Now(),
 	}
 
 	return newEmployee

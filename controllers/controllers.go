@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson"
-	oteltrace "go.opentelemetry.io/otel/api/trace"
 	guuid "github.com/google/uuid"
 )
 
